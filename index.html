@@ -30,21 +30,49 @@
     var geometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);//箱の大きさ(x,y,z)
     var material = new THREE.MeshPhongMaterial({ color: 0x0000ff });//color:rgb}
     var box = new THREE.Mesh(geometry, material);
-    box.position.z = -5;//ここで位置を変える
+    box.position.z = -5;//ここで位置を変える。真ん中
     scene.add(box);
+
+    // 箱2を作成
+    var boxGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);//箱の大きさ(x,y,z)
+    var boxMaterial = new THREE.MeshPhongMaterial({ color: 0x556b2f ,wireframe: true});//color:rgb}
+    var box2 = new THREE.Mesh(boxGeometry, boxMaterial);
+    box2.position.set(1,0,-5);//右
+    scene.add(box2);
+
+    // 箱3を作成
+    var boxGeometry2 = new THREE.BoxGeometry(0.5, 0.5, 0.5);//箱の大きさ(x,y,z)
+    var boxMaterial2 = new THREE.MeshPhongMaterial({ color: 0xff69b4 ,wireframe: true});//color:rgb}
+    var box3 = new THREE.Mesh(boxGeometry2, boxMaterial2);
+    box3.position.set(-1,0,-5);//右
+    scene.add(box3);
+
+    //ドーナッツ
+    var torusGeometry = new THREE.TorusGeometry( 0.5, 0.2, 6, 12 );
+    var torusMaterial = new THREE. MeshPhongMaterial( { color: 0xf0e68c } );
+    var torus = new THREE.Mesh( torusGeometry, torusMaterial );
+    torus.position.set( 1, 1, -5);
+    scene.add( torus );
+
+    //なんかクネクネしてるやつ
+    var  torusKnotGeometry = new THREE.TorusKnotGeometry( 1.5, 0.3, 20, 6, 3, 2 );
+    var torusKnotMaterial = new THREE. MeshPhongMaterial( { color: 0x7fffd4, wireframe: true } );
+    var torusKnot = new THREE.Mesh( torusKnotGeometry, torusKnotMaterial );
+    torusKnot.position.set( -3, 3, -15 );
+    scene.add( torusKnot );
 
     //角すい〜円すい
     var coneGeometry = new THREE.ConeGeometry( 0.5, 1, 5 );
     var coneMaterial = new THREE. MeshPhongMaterial( {color: 0x00ff00} );
     var cone = new THREE.Mesh( coneGeometry, coneMaterial );
-    cone.position.set(1,-1,-5);
+    cone.position.set(1,-1,-5);//右下
     scene.add(cone);
 
     //球
     var sphereGeometry = new THREE.SphereGeometry( 0.5, 32, 32 );
     var sphereMaterial = new THREE.MeshPhongMaterial( {color: 0xff0000,wireframe: true} );
     var sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-    sphere.position.set( -1, -1, -5 );
+    sphere.position.set( -1, -1, -5 );//左下
     scene.add( sphere );
 
     // 平行光源1
@@ -66,13 +94,29 @@
       box.rotation.x += 0.01;
       box.rotation.y += 0.01;
 
+      // 箱2を逆回転させる
+      box2.rotation.x -= 0.01;
+      box2.rotation.y -= 0.01;
+
+      // 箱3を逆回転させる
+      box3.rotation.x -= 0.01;
+      box3.rotation.y -= 0.01;
+
       //角すい〜円すいを回転
       cone.rotation.x += 0.01;
       cone.rotation.y += 0.01;
 
-      // //球を回転
+      //球を回転
       sphere.rotation.x += 0.01;
       sphere.rotation.y += 0.01;
+
+      //ドーナツを回転(倍速い)
+      torus.rotation.x += 0.02;
+      torus.rotation.y += 0.02;
+
+      //くねくねを回転(倍速い)
+      torusKnot.rotation.x += 0.02;
+      torusKnot.rotation.y += 0.02;
 
       renderer.render(scene, camera);
     };
