@@ -4,15 +4,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>フォグt</title>
+  <title>フォグ</title>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
   <script src="../tutorial-three/samples/js/loaders/ColladaLoader.js"></script>
   <script src="../tutorial-three/samples/js/controls/OrbitControls.js"></script>
 
-  
   <script>
+
     // ページの読み込みを待つ
     window.addEventListener('load', init);
 
@@ -73,24 +73,51 @@
       scene.add(new THREE.AmbientLight(0x00ffff)); // 環境光源
 
       // 毎フレーム時に実行されるループイベントです
-      tick();
 
-      renderer.render(scene, camera); // レンダリング
+      let i = 1;
 
-      function tick() {
+      if (i % 2 === 0) {
+        tick_mouse();
+      } else {
+        tick_mouse();
+      }
+
+      // tick_mouse();
+      // // tick_auto();
+
+
+      function tick_mouse() {
         // グループを回す
         // group.rotateY(0.01); 
         // レンダリング
         //マウス操作でカメラを回す
         renderer.render(scene, camera);
-        requestAnimationFrame(tick);
-      }
+        requestAnimationFrame(tick_mouse);
+      };
+
+      function tick_auto() {
+        // グループを回す
+        group.rotateY(0.01);
+        renderer.render(scene, camera);
+        // レンダリング
+        requestAnimationFrame(tick_auto);
+      };
     }
+    
+    function countNumber() {
+      i++
+    };
+
   </script>
+
 </head>
+
 
 <body>
   <canvas id="myCanvas"></canvas>
+
+  <input type="button" value="+1" onclick="countNumber();" /><br />
+  <input type="button" value="マウス操作" onclick="tick_mouse();" /><br />
 </body>
 
 </html>
