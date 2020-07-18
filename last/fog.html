@@ -10,6 +10,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
   <script src="../tutorial-three/samples/js/loaders/ColladaLoader.js"></script>
   <script src="../tutorial-three/samples/js/controls/OrbitControls.js"></script>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6a1f5224644c8ac11c29998514518eca7f609a54
   <script>
 
     // ページの読み込みを待つ
@@ -73,6 +77,7 @@
 
       // 毎フレーム時に実行されるループイベントです
 
+<<<<<<< HEAD
       // マウス操作でカメラを回す
       tick_mouse();
       // 自動でカメラを回す
@@ -83,6 +88,26 @@
         //マウス操作でカメラを回す
         renderer.render(scene, camera);
         // レンダリング
+=======
+      let i = 1;
+
+      if (i % 2 === 0) {
+        tick_mouse();
+      } else {
+        tick_mouse();
+      }
+
+      // tick_mouse();
+      // // tick_auto();
+
+
+      function tick_mouse() {
+        // グループを回す
+        // group.rotateY(0.01); 
+        // レンダリング
+        //マウス操作でカメラを回す
+        renderer.render(scene, camera);
+>>>>>>> 6a1f5224644c8ac11c29998514518eca7f609a54
         requestAnimationFrame(tick_mouse);
       };
 
@@ -93,8 +118,16 @@
         // レンダリング
         requestAnimationFrame(tick_auto);
       };
+<<<<<<< HEAD
 
     }
+=======
+    }
+    
+    function countNumber() {
+      i++
+    };
+>>>>>>> 6a1f5224644c8ac11c29998514518eca7f609a54
 
   </script>
 
@@ -104,6 +137,11 @@
 <body>
   <canvas id="myCanvas"></canvas>
 
+<<<<<<< HEAD
+=======
+  <input type="button" value="+1" onclick="countNumber();" /><br />
+  <input type="button" value="マウス操作" onclick="tick_mouse();" /><br />
+>>>>>>> 6a1f5224644c8ac11c29998514518eca7f609a54
 </body>
 
 </html>
