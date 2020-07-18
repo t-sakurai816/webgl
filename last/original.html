@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>オリジナル課題</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
+
+  <script src="../tutorial-three/samples/js/loaders/ColladaLoader.js"></script>
+  <script src="../tutorial-three/samples/js/controls/OrbitControls.js"></script>
+
+  <script>
+    // ページの読み込みを待つ
+    window.addEventListener('load', init);
+
+    function init() {
+      // サイズを指定
+      const width = 960;
+      const height = 540;
+
+      // レンダラーを作成
+      const renderer = new THREE.WebGLRenderer({
+        canvas: document.querySelector('#myCanvas')
+      });
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setSize(width, height);
+      renderer.setClearColor(0xf9f9f9, 1.0);
+
+      // シーンを作成
+      const scene = new THREE.Scene();
+      scene.fog = new THREE.Fog(0xf9f9f9, 200, 300);
+
+      // カメラを作成
+      const camera = new THREE.PerspectiveCamera(45, width / height, 0.01, 1000);
+
+      //カメラの初期座標を設定
+      camera.position.set(00, 0, 50);
+
+      // カメラコントローラーを作成
+      const controls = new THREE.OrbitControls(camera);
+      controls.target.set(0, 3, 0);
+      controls.update();
+
+      // マテリアルを作成する
+      const material = new THREE.SpriteMaterial({
+        map: new THREE.TextureLoader().load('../img/img1.png')
+      });
+      // フォグ（霞）を有効にする
+      material.fog = true;
+
+      // ビルボードを作成
+      for (let i = 0; i < 1000; i++) {
+        const sprite = new THREE.Sprite(material);
+        // ランダムな座標に配置
+        sprite.position.x = 500 * (Math.random() - 0.5);
+        sprite.position.y = 100 * Math.random() - 40;
+        sprite.position.z = 500 * (Math.random() - 0.5);
+        // 必要に応じてスケールを調整
+        sprite.scale.set(10, 10, 10);
+
+        scene.add(sprite);
+      }
+
+      // 地面を作成
+      const plane = new THREE.GridHelper(300, 10, 0x888888, 0x888888);
+      plane.position.y = -40;
+      scene.add(plane);
+
+      // 平行光源を作成
+      const directionalLight = new THREE.DirectionalLight(0xffffff);
+      directionalLight.position.set(1, 1, 1);
+      scene.add(directionalLight);
+      // 環境光を追加
+      const ambientLight = new THREE.AmbientLight(0x333333);
+      scene.add(ambientLight);
+
+      // 3DS形式のモデルデータを読み込む
+      const loader = new THREE.ColladaLoader();
+      // 3dsファイルのパスを指定
+      loader.load('./dae/Dragon2.5_dae.dae', collada => {
+        // 読み込み後に3D空間に追加
+        const model = collada.scene;
+        scene.add(model);
+      });
+
+      tick();
+
+      // 毎フレーム時に実行されるループイベントです
+      function tick() {
+        // レンダリング
+        renderer.render(scene, camera);
+        requestAnimationFrame(tick);
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <canvas id="myCanvas"></canvas>
+</body>
+
+</html>
