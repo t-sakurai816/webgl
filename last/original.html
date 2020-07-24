@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>期末課題</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
 
@@ -45,6 +45,9 @@
       const controls = new THREE.OrbitControls(camera);
       controls.autoRotate = true;
 
+      // 全体を明るくする
+      const allLight = new THREE.AmbientLight(0xFFFFFF, 1.0);
+      scene.add(allLight);
 
       //呼び出す画像, サイズ,x,y,z
       geometry(0, 500, -1300, 0, 0); //太陽
@@ -58,24 +61,21 @@
       geometry(8, 30, 500, 0, 0); //天王星
       geometry(9, 40, 600, 0, 0); //海王星
 
-
       let num = 200;
       while (num < 300) { //土星の輪を表現
         rings(num);
         num = num + 10;
       };
 
+      // helper();
       stars();
 
-
-      // 全体を明るくする
-      const allLight = new THREE.AmbientLight(0xFFFFFF, 1.0);
-      scene.add(allLight);
-
-
-      // helper();
-
       tick();
+
+      // 初期化のために実行
+      onResize();
+      // リサイズイベント発生時に実行
+      window.addEventListener('resize', onResize);
 
       function helper() {// helper
         const gridHelper = new THREE.GridHelper(1000, 20); // size, step
@@ -118,9 +118,9 @@
         // 形状データを作成
         const starGeometry = new THREE.Geometry();
         // 配置する範囲
-        const SIZE = 6000;
+        const SIZE = 4000;
         // 配置する個数
-        const LENGTH = 10000;
+        const LENGTH = 7000;
         for (let i = 0; i < LENGTH; i++) {
           starGeometry.vertices.push(new THREE.Vector3(
             SIZE * (Math.random() - 0.5),
@@ -138,6 +138,20 @@
 
         const mesh = new THREE.Points(starGeometry, starMaterial);
         scene.add(mesh);
+      }
+
+      function onResize() {
+        // サイズを取得
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+
+        // レンダラーのサイズを調整する
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(width, height);
+
+        // カメラのアスペクト比を正す
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
       }
 
       // 毎フレーム時に実行されるループイベントです
