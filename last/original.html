@@ -33,7 +33,7 @@
       scene.fog = new THREE.Fog(0x333333, 800, 500);
 
       // カメラを作成
-      const camera = new THREE.PerspectiveCamera(45, width / height, 1,20000); //(視野角, アスペクト比, near, far)
+      const camera = new THREE.PerspectiveCamera(45, width / height, 1, 20000); //(視野角, アスペクト比, near, far)
 
       // カメラの初期座標を設定
       camera.position.set(1, 1, 2000);
@@ -54,6 +54,12 @@
       geometry(7, 130, 300, 0, 0); //土星
       geometry(8, 30, 500, 0, 0); //天王星
       geometry(9, 40, 600, 0, 0); //海王星
+
+      let num = 200;
+      while (num < 300) { //土星の輪を表現
+        rings(num);
+        num = num + 10;
+      };
 
 
       // 全体を明るくする
@@ -86,6 +92,21 @@
         const sphere = new THREE.Mesh(sphereGeometry[i], sphereMaterial);
         sphere.position.set(x, y, z);
         scene.add(sphere);
+      };
+
+      function rings(diameter) {
+        // ドーナツを作成（土星の輪
+        const ring = new THREE.TorusGeometry(diameter, 3, 64, 1000); //(直径,細さ,?,?)
+        // マテリアルを作成
+        const material = new THREE.MeshLambertMaterial({ color: 0xd9c082 });
+        // メッシュを作成
+        const mesh = new THREE.Mesh(ring, material);
+        mesh.position.x = 300;
+        mesh.rotation.x = 400;
+        mesh.rotation.y = 100;
+        // mesh.rotation.z = 100000;
+        // 3D空間にメッシュを追加
+        scene.add(mesh);
       };
 
       // 毎フレーム時に実行されるループイベントです
