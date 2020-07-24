@@ -44,7 +44,7 @@
 
 
       //呼び出す画像, サイズ,x,y,z
-      geometry(0, 500, -1300, 0, 0);
+      // geometry(0, 500, -1300, 0, 0); //太陽
       geometry(1, 5, -540, 0, 0); //水星
       geometry(2, 10, -470, 0, 0); //金星
       geometry(3, 15, -400, 0, 0); //地球
@@ -54,6 +54,7 @@
       geometry(7, 130, 300, 0, 0); //土星
       geometry(8, 30, 500, 0, 0); //天王星
       geometry(9, 40, 600, 0, 0); //海王星
+
 
       let num = 200;
       while (num < 300) { //土星の輪を表現
@@ -73,8 +74,7 @@
 
       tick();
 
-      // helper
-      function helper() {
+      function helper() {// helper
         const gridHelper = new THREE.GridHelper(1000, 20); // size, step
         scene.add(gridHelper);
         const axisHelper = new THREE.AxisHelper(1000); //軸の長さ　X：赤、Y：緑、z：青
@@ -88,18 +88,17 @@
         //半径、垂直方向の分割数、水平方向の分割数
         const textureLoader = new THREE.TextureLoader();
         const img = ['img/sun.jpg', 'img/mercury.jpg', 'img/venus.jpg', 'img/earth.png', 'img/moon.jpg', 'img/mars.jpg', 'img/jupiter.jpg', 'img/saturn.jpg', 'img/uranus.jpg', 'img/neptune.jpg'] //写真を配列に代入
-        const erathtexture = textureLoader.load(img[i]);
+        const planetTexture = textureLoader.load(img[i]);
         const sphereMaterial = new THREE.MeshPhongMaterial();
-        sphereMaterial.map = erathtexture;
+        sphereMaterial.map = planetTexture;
         const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-        sphere.position.set(x, y, z);
+        sphere.position.set(x, y, z); //位置を変えられる
         scene.add(sphere);
-        return sphereGeometry;
+        return sphere;
 
       };
 
-      function rings(diameter) {
-        // ドーナツを作成（土星の輪
+      function rings(diameter) {// ドーナツを作成（土星の輪
         const ring = new THREE.TorusGeometry(diameter, 3, 64, 1000); //(直径,細さ,?,?)
         // マテリアルを作成
         const ringMaterial = new THREE.MeshLambertMaterial({ color: 0xd9c082 });
@@ -112,7 +111,7 @@
         scene.add(mesh);
       };
 
-      function stars() {
+      function stars() { //星を表示
         // 形状データを作成
         const starGeometry = new THREE.Geometry();
         // 配置する範囲
@@ -141,7 +140,8 @@
       // 毎フレーム時に実行されるループイベントです
       function tick() {
         // let obj = geometry();
-        // obj.sphereGeometry.rotateY(0.01);
+        // group.rotation.y += 0.01;
+        geometry(0, 500, -1300, 0, 0).rotateY(1);
         // レンダリング
         renderer.render(scene, camera);
         requestAnimationFrame(tick);
@@ -151,7 +151,9 @@
 </head>
 
 <body>
+  he
   <canvas id="myCanvas"></canvas>
+  hehehe
 </body>
 
 </html>
