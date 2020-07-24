@@ -30,7 +30,7 @@
       // シーンを作成
       const scene = new THREE.Scene();
       // シーン全体のフォグ
-      scene.fog = new THREE.Fog(0x333333, 800, 500);
+      scene.fog = new THREE.Fog(0x333333, 900, 600);
 
       // カメラを作成
       const camera = new THREE.PerspectiveCamera(45, width / height, 1, 20000); //(視野角, アスペクト比, near, far)
@@ -61,10 +61,12 @@
         num = num + 10;
       };
 
+      stars();
+
 
       // 全体を明るくする
-      const light = new THREE.AmbientLight(0xFFFFFF, 1.0);
-      scene.add(light);
+      const allLight = new THREE.AmbientLight(0xFFFFFF, 1.0);
+      scene.add(allLight);
 
 
       // helper();
@@ -81,36 +83,65 @@
 
       function geometry(i, size, x, y, z) { //呼び出す画像, サイズ,x,y,z
         //球
-        const sphereGeometry = ['太陽', '水星', '金星', '地球', '月', '火星', '木星', '土星', '天王星', '海王星', '冥王星']
-        sphereGeometry[i] = new THREE.SphereGeometry(size, 32, 32);
+        // ['太陽', '水星', '金星', '地球', '月', '火星', '木星', '土星', '天王星', '海王星', '冥王星']
+        const sphereGeometry = new THREE.SphereGeometry(size, 32, 32);
         //半径、垂直方向の分割数、水平方向の分割数
         const textureLoader = new THREE.TextureLoader();
         const img = ['img/sun.jpg', 'img/mercury.jpg', 'img/venus.jpg', 'img/earth.png', 'img/moon.jpg', 'img/mars.jpg', 'img/jupiter.jpg', 'img/saturn.jpg', 'img/uranus.jpg', 'img/neptune.jpg'] //写真を配列に代入
         const erathtexture = textureLoader.load(img[i]);
         const sphereMaterial = new THREE.MeshPhongMaterial();
         sphereMaterial.map = erathtexture;
-        const sphere = new THREE.Mesh(sphereGeometry[i], sphereMaterial);
+        const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
         sphere.position.set(x, y, z);
         scene.add(sphere);
+        return sphereGeometry;
+
       };
 
       function rings(diameter) {
         // ドーナツを作成（土星の輪
         const ring = new THREE.TorusGeometry(diameter, 3, 64, 1000); //(直径,細さ,?,?)
         // マテリアルを作成
-        const material = new THREE.MeshLambertMaterial({ color: 0xd9c082 });
+        const ringMaterial = new THREE.MeshLambertMaterial({ color: 0xd9c082 });
         // メッシュを作成
-        const mesh = new THREE.Mesh(ring, material);
+        const mesh = new THREE.Mesh(ring, ringMaterial);
         mesh.position.x = 300;
         mesh.rotation.x = 400;
         mesh.rotation.y = 100;
-        // mesh.rotation.z = 100000;
         // 3D空間にメッシュを追加
         scene.add(mesh);
       };
 
+      function stars() {
+        // 形状データを作成
+        const starGeometry = new THREE.Geometry();
+        // 配置する範囲
+        const SIZE = 6000;
+        // 配置する個数
+        const LENGTH = 10000;
+        for (let i = 0; i < LENGTH; i++) {
+          starGeometry.vertices.push(new THREE.Vector3(
+            SIZE * (Math.random() - 0.5),
+            SIZE * (Math.random() - 0.5),
+            SIZE * (Math.random() - 0.5),
+          ));
+        }
+        // マテリアルを作成
+        const starMaterial = new THREE.PointsMaterial({
+          // 一つ一つのサイズ
+          size: 10,
+          // 色
+          color: 0xFFFFFF,
+        });
+
+        const mesh = new THREE.Points(starGeometry, starMaterial);
+        scene.add(mesh);
+      }
+
       // 毎フレーム時に実行されるループイベントです
       function tick() {
+        // let obj = geometry();
+        // obj.sphereGeometry.rotateY(0.01);
         // レンダリング
         renderer.render(scene, camera);
         requestAnimationFrame(tick);
