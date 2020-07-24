@@ -44,10 +44,10 @@
 
 
       //呼び出す画像, サイズ,x,y,z
-      // geometry(0, 500, -1300, 0, 0); //太陽
+      geometry(0, 500, -1300, 0, 0); //太陽
       geometry(1, 5, -540, 0, 0); //水星
       geometry(2, 10, -470, 0, 0); //金星
-      geometry(3, 15, -400, 0, 0); //地球
+      // geometry(3, 15, -400, 0, 0); //地球
       geometry(4, 5, -375, 25, 0); //月
       geometry(5, 10, -335, 0, 0); //火星
       geometry(6, 150, -100, 0, 0); //木星
@@ -141,7 +141,7 @@
       function tick() {
         // let obj = geometry();
         // group.rotation.y += 0.01;
-        geometry(0, 500, -1300, 0, 0).rotateY(1);
+        geometry(3, 15, -400, 0, 0).rotation.y += 0.1;
         // レンダリング
         renderer.render(scene, camera);
         requestAnimationFrame(tick);
@@ -151,9 +151,9 @@
 </head>
 
 <body>
-  he
-  <canvas id="myCanvas"></canvas>
-  hehehe
+  hogehoge
+  <canvas id="myCanvas"></canvas><br>
+  hoge
 </body>
 
 </html>
