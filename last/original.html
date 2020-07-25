@@ -49,7 +49,9 @@
       scene.fog = new THREE.Fog(0x333333, 800, 500);
 
       // カメラを作成
-      const camera = new THREE.PerspectiveCamera(45, width / height, 1, 20000); //(視野角, アスペクト比, near, far)
+      const camera = new THREE.PerspectiveCamera(45, width / height, 1, 10000); //(視野角, アスペクト比, near, far)
+      const cameraHelper = new THREE.CameraHelper(camera);
+      scene.add(cameraHelper);
 
       // カメラの初期座標を設定
       camera.position.set(1, 1000, 4000);
