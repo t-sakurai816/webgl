@@ -22,6 +22,8 @@
 
       <p>非常に処理が重いため、読み込みに時間がかかります。</p>
       <p>メモリとGPUをかなり必要とします。</p>
+
+      <canvas id="myCanvas2"></canvas>
     </div>
   </div>
 
@@ -173,6 +175,163 @@
         rotation(8, 30, 1800, 0, -200, 1.706932); //天王星
         rotation(9, 40, 2000, 0, -1500, 0.4939282); //海王星
         group.rotateY(0.01);
+
+        // レンダリング
+        renderer.render(scene, camera);
+        requestAnimationFrame(tick);
+      }
+      tick();
+    }
+
+  </script>
+
+  <script>
+    // ページの読み込みを待つ
+    window.addEventListener('load', init);
+
+    function init() {
+      // サイズを指定
+      const width = 800;
+      const height = 600;
+
+      // レンダラーを作成
+      const renderer = new THREE.WebGLRenderer({
+        canvas: document.querySelector('#myCanvas2')
+      });
+      renderer.setSize(width, height);
+      // 背景を灰色
+      renderer.setClearColor(0x333333, 1.0);
+
+      // シーンを作成
+      const scene = new THREE.Scene();
+      // シーン全体のフォグ
+      scene.fog = new THREE.Fog(0x333333, 800, 500);
+
+      // カメラを作成
+      const camera = new THREE.PerspectiveCamera(35, width / height, 0.1, 0); //(視野角, アスペクト比, near, far)
+      // const cameraHelper = new THREE.CameraHelper(camera);
+      // scene.add(cameraHelper);
+
+      // カメラの初期座標を設定
+      camera.position.set(1, 1000, 4000);
+
+      // カメラコントローラーを作成
+      const controls = new THREE.OrbitControls(camera);
+      controls.autoRotate = true;
+
+      // 全体を明るくする
+      const allLight = new THREE.AmbientLight(0xFFFFFF, 1.0);
+      scene.add(allLight);
+
+      //呼び出す画像, サイズ,x,y,z
+      geometry(0, 50, 0, 0, 0, 0.1265364); //太陽
+
+      // helper();
+      stars();
+
+      // 土星の輪
+      let num = 200;
+      while (num < 300) { //土星の輪を表現
+        rings(num);
+        num = num + 10;
+      };
+
+      function helper() {// helper
+        const gridHelper = new THREE.GridHelper(10000, 200); // size, step
+        scene.add(gridHelper);
+        const axisHelper = new THREE.AxisHelper(1000); //軸の長さ　X：赤、Y：緑、z：青
+        scene.add(axisHelper);
+      };
+
+      //groupをグローバル変数にする
+      const group = new THREE.Group();
+      function rotation(i, size, x, y, z, rotationX) {//呼び出す画像, サイズ,x,y,z,傾き(ラジアン)
+        // グループを作成
+        // ['太陽', '水星', '金星', '地球', '月', '火星', '木星', '土星', '天王星', '海王星', '冥王星']
+        scene.add(group);
+        const sphereGeometry = new THREE.SphereBufferGeometry(size, 32, 32);
+        const textureLoader = new THREE.TextureLoader();
+        const IMG = ['img/sun.jpg', 'img/mercury.jpg', 'img/venus.jpg', 'img/earth.png', 'img/moon.jpg', 'img/mars.jpg', 'img/jupiter.jpg', 'img/saturn.jpg', 'img/uranus.jpg', 'img/neptune.jpg'] //写真を配列に代入
+        const planetTexture = textureLoader.load(IMG[i]);
+        const sphereMaterial = new THREE.MeshBasicMaterial();
+        sphereMaterial.map = planetTexture;
+        const mesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
+        mesh.position.set(x, y, z); //位置
+        mesh.rotation.x = rotationX;  //傾き
+        group.add(mesh);
+      }
+
+      function geometry(i, size, x, y, z, rotationX) { //呼び出す画像, サイズ,x,y,z,傾き(ラジアン)
+        //球
+        // ['太陽', '水星', '金星', '地球', '月', '火星', '木星', '土星', '天王星', '海王星', '冥王星']
+        const sphereGeometry = new THREE.SphereBufferGeometry(size, 32, 32);//半径、垂直方向の分割数、水平方向の分割数
+        const textureLoader = new THREE.TextureLoader();
+        const img = ['img/sun.jpg', 'img/mercury.jpg', 'img/venus.jpg', 'img/earth.png', 'img/moon.jpg', 'img/mars.jpg', 'img/jupiter.jpg', 'img/saturn.jpg', 'img/uranus.jpg', 'img/neptune.jpg'] //写真を配列に代入
+        const planetTexture = textureLoader.load(img[i]);
+        const sphereMaterial = new THREE.MeshBasicMaterial();
+        sphereMaterial.map = planetTexture;
+        const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+        sphere.position.set(x, y, z); //位置を変えられる
+        sphere.rotation.x = rotationX;
+        // sphere.rotation.y = 100;
+        scene.add(sphere);
+        // return group;
+
+      };
+
+
+      function rings(diameter) {// ドーナツを作成（土星の輪
+        const ringGeometry = new THREE.TorusGeometry(diameter, 3, 64, 1000); //(直径,細さ,?,?)
+        // マテリアルを作成
+        const ringMaterial = new THREE.MeshLambertMaterial({ color: 0xd9c082 });
+        // メッシュを作成
+        const ringMesh = new THREE.Mesh(ringGeometry, ringMaterial);
+        ringMesh.position.x = 1400;
+        ringMesh.position.z = -800;
+        ringMesh.rotation.x = 2.0367992267905954;
+        // 3D空間にメッシュを追加
+        scene.add(ringMesh);
+      };
+
+      function stars() { //星を表示
+        // 形状データを作成
+        const starGeometry = new THREE.Geometry();
+        // 配置する範囲
+        const SIZE = 4000; //横
+        // 配置する個数
+        const LENGTH = 3000;
+        for (let i = 0; i < LENGTH; i++) {
+          starGeometry.vertices.push(new THREE.Vector3(
+            SIZE * (Math.random() - 0.5), //横
+            SIZE * (Math.random() - 0.5), //縦
+            SIZE * (Math.random() - 0.5), //幅
+          ));
+        }
+        // マテリアルを作成
+        const starMaterial = new THREE.PointsMaterial({
+          // 一つ一つのサイズ
+          size: 1,
+          // 色
+          color: 0xFFFFFF,
+        });
+
+        const starMesh = new THREE.Points(starGeometry, starMaterial);
+        scene.add(starMesh);
+      }
+
+
+      // 毎フレーム時に実行されるループイベントです
+      function tick() {
+        rotation(1, 5, 0, 0, -100, 0.0001745329); //水星
+        rotation(2, 10, 100, 0, -150, 3.08923); //金星
+        rotation(3, 30, -100, 0, 300, 0.408407); //地球
+        rotation(4, 10, -150, 45, 300, 0.1167625); //月
+        rotation(5, 20, -200, 0, 450, 0.439823); //火星
+        rotation(6, 150, 800, 0, -900, 0.022863813); //木星
+        rotation(7, 130, 1400, 0, -800, 0.4660029); //土星
+        rotation(8, 30, 1800, 0, -200, 1.706932); //天王星
+        rotation(9, 40, 2000, 0, -1500, 0.4939282); //海王星
+        // group.rotateY(0.01);
 
         // レンダリング
         renderer.render(scene, camera);
