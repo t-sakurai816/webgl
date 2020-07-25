@@ -51,7 +51,7 @@
       scene.fog = new THREE.Fog(0x333333, 800, 500);
 
       // カメラを作成
-      const camera = new THREE.PerspectiveCamera(35, width / height, 0.1, 0); //(視野角, アスペクト比, near, far)
+      const camera = new THREE.PerspectiveCamera(35, width / height, 0.000000001, 0); //(視野角, アスペクト比, near, far)
       // const cameraHelper = new THREE.CameraHelper(camera);
       // scene.add(cameraHelper);
 
@@ -124,7 +124,7 @@
 
 
       function rings(diameter) {// ドーナツを作成（土星の輪
-        const ringGeometry = new THREE.TorusGeometry(diameter, 3, 64, 1000); //(直径,細さ,?,?)
+        const ringGeometry = new THREE.TorusBufferGeometry(diameter, 3, 64, 1000); //(直径,細さ,?,?)
         // マテリアルを作成
         const ringMaterial = new THREE.MeshLambertMaterial({ color: 0xd9c082 });
         // メッシュを作成
@@ -208,7 +208,7 @@
       scene.fog = new THREE.Fog(0x333333, 800, 500);
 
       // カメラを作成
-      const camera = new THREE.PerspectiveCamera(35, width / height, 0.1, 0); //(視野角, アスペクト比, near, far)
+      const camera = new THREE.PerspectiveCamera(35, width / height, 0.000000001, 0); //(視野角, アスペクト比, near, far)
       // const cameraHelper = new THREE.CameraHelper(camera);
       // scene.add(cameraHelper);
 
@@ -290,7 +290,7 @@
 
 
       function rings(diameter) {// ドーナツを作成（土星の輪
-        const ringGeometry = new THREE.TorusGeometry(diameter, 3, 64, 1000); //(直径,細さ,?,?)
+        const ringGeometry = new THREE.TorusBufferGeometry(diameter, 3, 64, 1000); //(直径,細さ,?,?)
         // マテリアルを作成
         const ringMaterial = new THREE.MeshLambertMaterial({ color: 0xd9c082 });
         // メッシュを作成
