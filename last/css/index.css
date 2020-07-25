@@ -1,7 +1,6 @@
 .mainDiv {
   display: flex;
   width: 100vw;
-  padding-top: 100px;
   justify-content: center;
 }
 
