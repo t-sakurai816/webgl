@@ -52,7 +52,7 @@
       const camera = new THREE.PerspectiveCamera(45, width / height, 1, 20000); //(視野角, アスペクト比, near, far)
 
       // カメラの初期座標を設定
-      camera.position.set(1, 1, 4000);
+      camera.position.set(1, 1000, 4000);
 
       // カメラコントローラーを作成
       const controls = new THREE.OrbitControls(camera);
@@ -92,7 +92,7 @@
         const textureLoader = new THREE.TextureLoader();
         const IMG = ['img/sun.jpg', 'img/mercury.jpg', 'img/venus.jpg', 'img/earth.png', 'img/moon.jpg', 'img/mars.jpg', 'img/jupiter.jpg', 'img/saturn.jpg', 'img/uranus.jpg', 'img/neptune.jpg'] //写真を配列に代入
         const planetTexture = textureLoader.load(IMG[i]);
-        const sphereMaterial = new THREE.MeshPhongMaterial();
+        const sphereMaterial = new THREE.MeshBasicMaterial();
         sphereMaterial.map = planetTexture;
         const mesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
         mesh.position.set(x, y, z); //位置
@@ -107,7 +107,7 @@
         const textureLoader = new THREE.TextureLoader();
         const img = ['img/sun.jpg', 'img/mercury.jpg', 'img/venus.jpg', 'img/earth.png', 'img/moon.jpg', 'img/mars.jpg', 'img/jupiter.jpg', 'img/saturn.jpg', 'img/uranus.jpg', 'img/neptune.jpg'] //写真を配列に代入
         const planetTexture = textureLoader.load(img[i]);
-        const sphereMaterial = new THREE.MeshPhongMaterial();
+        const sphereMaterial = new THREE.MeshBasicMaterial();
         sphereMaterial.map = planetTexture;
         const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
         sphere.position.set(x, y, z); //位置を変えられる
