@@ -53,7 +53,14 @@
       geometry(0, 50, 0, 0, 0, 0.1265364); //太陽
 
       // helper();
-      // stars();
+      stars();
+
+      // 土星の輪
+      // let num = 200;
+      // while (num < 300) { //土星の輪を表現
+      //   rings(num);
+      //   num = num + 10;
+      // };
 
       function helper() {// helper
         const gridHelper = new THREE.GridHelper(10000, 200); // size, step
@@ -98,10 +105,8 @@
 
       };
 
-      // ringGroupをグローバル変数にする 
-      const ringGroup = new THREE.Group();
+
       function rings(diameter) {// ドーナツを作成（土星の輪
-        scene.add(ringGroup);
         const ringGeometry = new THREE.TorusGeometry(diameter, 3, 64, 1000); //(直径,細さ,?,?)
         // マテリアルを作成
         const ringMaterial = new THREE.MeshLambertMaterial({ color: 0xd9c082 });
@@ -112,7 +117,6 @@
         ringMesh.rotation.x = 2.0367992267905954;
         // 3D空間にメッシュを追加
         scene.add(ringMesh);
-        ringGroup.add(ringMesh)
       };
 
       function stars() { //星を表示
@@ -144,23 +148,17 @@
 
       // 毎フレーム時に実行されるループイベントです
       function tick() {
-        // rotation(1, 5, 0, 0, -100, 0.0001745329); //水星
-        // rotation(2, 10, 100, 0, -150, 3.08923); //金星
-        // rotation(3, 30, -100, 0, 300, 0.408407); //地球
-        // rotation(4, 10, -150, 45, 300, 0.1167625); //月
-        // rotation(5, 20, -200, 0, 450, 0.439823); //火星
-        // rotation(6, 150, 800, 0, -900, 0.022863813); //木星
+        rotation(1, 5, 0, 0, -100, 0.0001745329); //水星
+        rotation(2, 10, 100, 0, -150, 3.08923); //金星
+        rotation(3, 30, -100, 0, 300, 0.408407); //地球
+        rotation(4, 10, -150, 45, 300, 0.1167625); //月
+        rotation(5, 20, -200, 0, 450, 0.439823); //火星
+        rotation(6, 150, 800, 0, -900, 0.022863813); //木星
         rotation(7, 130, 1400, 0, -800, 0.4660029); //土星
-        // rotation(8, 30, 1800, 0, -200, 1.706932); //天王星
-        // rotation(9, 40, 2000, 0, -1500, 0.4939282); //海王星
+        rotation(8, 30, 1800, 0, -200, 1.706932); //天王星
+        rotation(9, 40, 2000, 0, -1500, 0.4939282); //海王星
         group.rotateY(0.01);
 
-        let num = 200;
-        while (num < 300) { //土星の輪を表現
-          rings(num);
-          num = num + 10;
-        };
-        ringGroup.rotateY(0.01);
         // レンダリング
         renderer.render(scene, camera);
         requestAnimationFrame(tick);
