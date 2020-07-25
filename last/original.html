@@ -49,11 +49,29 @@
       const allLight = new THREE.AmbientLight(0xFFFFFF, 1.0);
       scene.add(allLight);
 
+      //groupをグローバル変数にする
+      const group = new THREE.Group();
+
+      function rotation() {
+        // グループを作成
+        scene.add(group);
+        const geometry2 = new THREE.SphereGeometry(150, 32, 32);
+        const textureLoader = new THREE.TextureLoader();
+        const planetTexture = textureLoader.load('img/earth.png');
+        const material2 = new THREE.MeshPhongMaterial();
+        material2.map = planetTexture;
+        const mesh = new THREE.Mesh(geometry2, material2);
+        mesh.position.set(300, 0, 0);
+        group.add(mesh);
+      }
+
+
+
       //呼び出す画像, サイズ,x,y,z
       geometry(0, 500, -1300, 0, 0, 0.1265364); //太陽
       geometry(1, 5, -540, 0, 0, 0.0001745329); //水星
       geometry(2, 10, -470, 0, 0, 3.08923); //金星
-      geometry(3, 15, -400, 0, 0, 0.408407); //地球
+      // geometry(3, 15, -400, 0, 0, 0.408407); //地球
       geometry(4, 5, -375, 25, 0, 0.1167625); //月
       geometry(5, 10, -335, 0, 0, 0.439823); //火星
       geometry(6, 150, -100, 0, 0, 0.022863813); //木星
@@ -157,6 +175,8 @@
 
       // 毎フレーム時に実行されるループイベントです
       function tick() {
+        rotation();
+        group.rotateY(0.01);
         // レンダリング
         renderer.render(scene, camera);
         requestAnimationFrame(tick);
