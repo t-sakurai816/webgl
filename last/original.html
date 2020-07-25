@@ -64,7 +64,7 @@
         sphereMaterial.map = planetTexture;
         const mesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
         mesh.position.set(x, y, z); //位置
-        sphere.rotation.x = rotationX;  //傾き
+        mesh.rotation.x = rotationX;  //傾き
         group.add(mesh);
       }
 
