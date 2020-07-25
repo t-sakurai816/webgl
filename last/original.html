@@ -52,16 +52,19 @@
       //groupをグローバル変数にする
       const group = new THREE.Group();
 
-      function rotation() {
+      function rotation(i,size,x,y,z,rotationX) {
         // グループを作成
+        // ['太陽', '水星', '金星', '地球', '月', '火星', '木星', '土星', '天王星', '海王星', '冥王星']
         scene.add(group);
-        const geometry2 = new THREE.SphereGeometry(150, 32, 32);
+        const sphereGeometry = new THREE.SphereGeometry(size, 32, 32);
         const textureLoader = new THREE.TextureLoader();
-        const planetTexture = textureLoader.load('img/earth.png');
-        const material2 = new THREE.MeshPhongMaterial();
-        material2.map = planetTexture;
-        const mesh = new THREE.Mesh(geometry2, material2);
-        mesh.position.set(300, 0, 0);
+        const IMG = ['img/sun.jpg', 'img/mercury.jpg', 'img/venus.jpg', 'img/earth.png', 'img/moon.jpg', 'img/mars.jpg', 'img/jupiter.jpg', 'img/saturn.jpg', 'img/uranus.jpg', 'img/neptune.jpg'] //写真を配列に代入
+        const planetTexture = textureLoader.load(IMG[i]);
+        const sphereMaterial = new THREE.MeshPhongMaterial();
+        sphereMaterial.map = planetTexture;
+        const mesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
+        mesh.position.set(x, y, z); //位置
+        sphere.rotation.x = rotationX;  //傾き
         group.add(mesh);
       }
 
@@ -137,14 +140,16 @@
         // 形状データを作成
         const starGeometry = new THREE.Geometry();
         // 配置する範囲
-        const SIZE = 3000;
+        const SIZE = 3000; //横
+        const SIZEE = 1000; //縦
+        const SIZEEE = 1000; //幅
         // 配置する個数
         const LENGTH = 6000;
         for (let i = 0; i < LENGTH; i++) {
           starGeometry.vertices.push(new THREE.Vector3(
-            SIZE * (Math.random() - 0.5),
-            SIZE * (Math.random() - 0.5),
-            SIZE * (Math.random() - 0.5),
+            SIZE * (Math.random() - 0.5), //横
+            SIZEE * (Math.random() - 0.5), //縦
+            SIZEEE * (Math.random() - 0.5), //幅
           ));
         }
         // マテリアルを作成
@@ -175,7 +180,7 @@
 
       // 毎フレーム時に実行されるループイベントです
       function tick() {
-        rotation();
+        rotation(3, 15, -400, 0, 0, 0.408407);
         group.rotateY(0.01);
         // レンダリング
         renderer.render(scene, camera);
