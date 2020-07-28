@@ -2,7 +2,7 @@
 コンピュータグラフィックスの講義で作りました。
 three.jsというライブラリを用いて作りました。
 
-最終課題は[こちらのリンク](https://s3-ap-northeast-1.amazonaws.com/webgl.massyu.net/last/original.html)に載せています。  
+最終課題は[こちらのリンク](https://webgl.massyu.net/last/original.html)に載せています。  
 AWSのS3とCloudFrontを使用してホスティングしています。
 
 お使いの端末によってはスペック不足でかなり重い可能性があります。  
