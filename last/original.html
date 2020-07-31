@@ -111,12 +111,10 @@
         const planetTexture = textureLoader.load(img[i]);
         const sphereMaterial = new THREE.MeshBasicMaterial();
         sphereMaterial.map = planetTexture;
-        const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-        sphere.position.set(x, y, z); //位置を変えられる
-        sphere.rotation.x = rotationX;
-        // sphere.rotation.y = 100;
-        scene.add(sphere);
-        return sphere;
+        const sphereMesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
+        sphereMesh.position.set(x, y, z); //位置を変えられる
+        scene.add(sphereMesh);
+        return sphereMesh;
 
       };
 
