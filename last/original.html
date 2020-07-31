@@ -96,15 +96,15 @@
       function rotation() {
         // グループを作成
         scene.add(group);
-        group.add(geometry(1, 5, 0, 0, -100, 0.0001745329));
-        group.add(geometry(2, 10, 100, 0, -150, 3.08923));
-        group.add(geometry(3, 30, -100, 0, 300, 0.408407));
-        group.add(geometry(4, 10, -150, 45, 300, 0.1167625));
-        group.add(geometry(5, 20, -200, 0, 450, 0.439823));
-        group.add(geometry(6, 150, 800, 0, -900, 0.1));
-        group.add(geometry(7, 130, 1400, 0, -800, 0.4660029));
-        group.add(geometry(8, 30, 1800, 0, -200, 1.706932));
-        group.add(geometry(9, 40, 2000, 0, -1500, 0.4939282));
+        group.add(geometry(1, 5, 0, 0, -100, 0.0001745329)); //水星
+        group.add(geometry(2, 10, 100, 0, -150, 3.08923)); //金星
+        group.add(geometry(3, 30, -100, 0, 300, 0.408407)); //地球
+        group.add(geometry(4, 10, -150, 45, 300, 0.1167625)); //月
+        group.add(geometry(5, 20, -200, 0, 450, 0.439823)); //火星
+        group.add(geometry(6, 150, 800, 0, -900, 0.1)); //木星
+        group.add(geometry(7, 130, 1400, 0, -800, 0.4660029)); //土星
+        group.add(geometry(8, 30, 1800, 0, -200, 1.706932)); //天王星
+        group.add(geometry(9, 40, 2000, 0, -1500, 0.4939282)); //海王星
         group.add(rings(200));
         group.add(rings(220));
         group.add(rings(240));
@@ -134,7 +134,7 @@
       const ringGroup = new THREE.Group();
       function rings(diameter) {// ドーナツを作成（土星の輪
         // scene.add(ringGroup);
-        const ringGeometry = new THREE.TorusBufferGeometry(diameter, 3, 64, 1000); //(直径,細さ,?,?)
+        const ringGeometry = new THREE.TorusBufferGeometry(diameter, 3, 64, 1000); //(直径,細さ,?,n角形)
         // マテリアルを作成
         const ringMaterial = new THREE.MeshLambertMaterial({ color: 0xd9c082 });
         // メッシュを作成
