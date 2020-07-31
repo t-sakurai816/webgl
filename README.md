@@ -9,3 +9,8 @@ AWSのS3とCloudFrontを使用してホスティングしています。
 オンボードグラフィックの場合は星の数が少なく表現される様になっています。  
 
 意図的に太陽の大きさを小さくしています。
+
+動く速度は違いますが、こちらが意図している動きのGIFは下記をご覧ください
+
+![惑星のGIF](https://webgl.massyu.net/last/three.gif)  
+[GIFリンク](https://webgl.massyu.net/last/three.gif)
